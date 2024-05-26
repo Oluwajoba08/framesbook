@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* --fb-color: #0866ff; */
+    --fb-color: #ff9408;
+    --fb-color-off: #70a7ff79;
+    --fb-color-off-text: #426fb8;
+    --bg-main: hsl(200, 9%, 94%);
+    --off-bg-main: hsl(0, 0%, 100%);
+    --off-bg-main-off: hsl(0, 0%, 82%);
+    --off-bg-main-off-hover: hsl(0, 0%, 69%);
+    --text-main: hsl(0, 0%, 5%);
+    --off-text-main: hsl(0, 0%, 25%);
+    --off-text-main-off: hsl(0, 0%, 40%);
+    --primary-button-background: #0866ff;
+    --secondary-icon: hsl(0, 0%, 20%);
+    --primary-icon: hsl(0, 0%, 15%);
+    --app-colors-red: #df3225;
+    --app-colors-green: #31ee5a;
+    --app-colors-dirty-green: #7ec033;
+    --app-colors-yellow: #ffc72c;
+    scroll-behavior: smooth;
+  }
+  html.dark_mode {
+    /* --fb-color: #0866ff; */
+    --fb-color: #ff9408;
+    --fb-color-off: #70a7ff79;
+    --fb-color-off-text: #adcdff;
+    --bg-main: hsl(0, 0%, 10%);
+    --off-bg-main: hsl(0, 0%, 20%);
+    --off-bg-main-off: hsl(0, 0%, 35%);
+    --off-bg-main-off-hover: hsl(0, 0%, 51%);
+    --text-main: hsl(0, 0%, 95%);
+    --off-text-main: hsl(0, 0%, 75%);
+    --off-text-main-off: hsl(0, 0%, 68%);
+    --primary-button-background: #0866ff;
+    --secondary-icon: hsl(0, 0%, 80%);
+    --primary-icon: hsl(0, 0%, 85%);
+    --app-colors-red: #df3225;
+    --app-colors-green: #31ee5a;
+    --app-colors-dirty-green: #7ec033;
+    --app-colors-yellow: #ffc72c;
+  }
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+  }
+  body > * {
+    font-family: Inter, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  a {
+    cursor: pointer;
+  }
+  footer a {
+    transition: text-decoration 900ms ease-in;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+  input:focus,
+  input:focus-within,
+  input:focus-visible {
+    outline: none;
+  }
+}
+
+@layer components {
+  .btn {
+    padding: 5px 12px;
+  }
+  .scroller::-webkit-scrollbar {
+    @apply w-2 hover:bg-[--off-bg-main];
+  }
+  .scroller::-webkit-scrollbar-thumb {
+    @apply bg-[--off-bg-main-off-hover] rounded-md hover:bg-[--off-text-main-off];
+  }
+
+  html.dark_mode ::-webkit-scrollbar {
+    @apply bg-[--off-bg-main-off];
+  }
+  html.dark_mode ::-webkit-scrollbar-thumb {
+    @apply bg-[--off-bg-main-off-hover] hover:bg-[--secondary-icon];
+  }
+  html.dark_mode ::-webkit-scrollbar-button {
+    @apply fill-white;
+  }
+
+  .skeleton span {
+    background: linear-gradient(
+        var(--off-bg-main),
+        var(--off-bg-main-off),
+        var(--off-bg-main),
+        var(--off-bg-main-off),
+        var(--off-bg-main),
+        var(--off-bg-main-off),
+        var(--off-bg-main),
+        var(--off-bg-main-off),
+        var(--off-bg-main),
+        var(--off-bg-main-off)
+      )
+      bottom / 100% 5000%;
+    animation: skeleton-loading 10s linear infinite;
+  }
+  @keyframes skeleton-loading {
+    to {
+      background-position: top;
+    }
+  }
+
+  .shad-css {
+    box-shadow: 0px 0px 10px 0px rgba(0 0 0 / 0.1);
+  }
+  .loading {
+    width: 50px;
+    height: 50px;
+    margin-block: 1rem;
+    background-image: url("/loader.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transform-origin: center center;
+    animation: loading 900ms cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+  @keyframes loading {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */

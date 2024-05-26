@@ -1,0 +1,58 @@
+const friends = [
+  {
+    id: "2382842842424",
+    name: "John Ade",
+    profileImage: "nnadozie1.jpg",
+    coverImage: "rash.jpg",
+    profileLink: "uewry84",
+    friends: [],
+    bio: "",
+  },
+  {
+    id: "283763846323",
+    name: "Brenda Rogars",
+    profileImage: "pastor-moses.jpg",
+    coverImage: "rash.jpg",
+    profileLink: "diufyy83",
+    friends: [],
+    bio: "",
+  },
+  {
+    id: "823724242332",
+    name: "Groningen Mal",
+    profileImage: "kelvin.jpg",
+    coverImage: "rash.jpg",
+    profileLink: "uuihwuie3",
+    friends: [],
+    bio: "",
+  },
+  {
+    id: "439853858343",
+    name: "Dean Jam",
+    profileImage: "shaggi1.jpg",
+    coverImage: "lagoscity1.jpg",
+    profileLink: "uhuirui832q",
+    friends: [],
+    bio: "",
+  },
+  {
+    id: "892828424224",
+    name: "Boss James",
+    profileImage: "avatar.jpg",
+    coverImage: "vbank2.jpg",
+    profileLink: "uewry84",
+    friends: [],
+    bio: "",
+  },
+  {
+    id: "092924824723",
+    name: "Peru Fami",
+    profileImage: "lekan-design.jpg",
+    coverImage: "vbank3.jpg",
+    profileLink: "udygfyiso924",
+    friends: [],
+    bio: "",
+  },
+]
+
+export default friends
