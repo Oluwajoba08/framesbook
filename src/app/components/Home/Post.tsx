@@ -1,31 +1,25 @@
 "use client"
 
-import React, { useState, useRef, Suspense } from "react"
+import React, { useState, useEffect, useRef, Suspense } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import type { postProps } from "@/lib/definitions"
+import type { like, postProps } from "@/lib/definitions"
 import HidePost from "./HidePost"
 import Loading from "../Loading"
+import LikeIcon from "../svg/Like"
+import LikeButton from "./LikeButton"
 // import TimeAgo from 'react-timeago'
 
 const Post = ({ id, author, createdAt, likes, comments, shares, audience, images, content, group }: postProps) => {
   const [postOptionsOpen, setPostOptionsOpen] = useState(false)
   const [hidePost, setHidePost] = useState(false)
   const [seeMore, setSeeMore] = useState(false)
-  const [like, setLike] = useState(false)
+  const [postLikes, setPostLikes] = useState<like[]>([])
   const postOptionsRef = useRef(null)
 
   function closeOverlayAndHide() {
     setPostOptionsOpen(false)
     setHidePost(true)
-  }
-  function toggleLike() {
-    setLike((like) => !like)
-    if (!like) {
-      likes.push({ author, variant: "like" })
-    } else {
-      likes.pop()
-    }
   }
 
   return (
@@ -156,9 +150,9 @@ const Post = ({ id, author, createdAt, likes, comments, shares, audience, images
 
           {images && (
             <div
-              className={`grid gap-0.5 w-full ${images.length === 2 ? "grid-cols-2" : ""} ${images.length === 3 ? "grid-cols-2 [grid-template-rows:240px_160px]" : ""} ${
-                images.length === 4 ? "grid-cols-2 [grid-template-rows:240px_160px]" : ""
-              } ${images.length > 4 ? "grid-cols-6 [grid-template-rows:240px_160px] " : ""}`}
+              className={`grid gap-0.5 w-full ${images.length === 2 ? "grid-cols-2" : ""} ${images.length === 3 ? "grid-cols-2 [grid-template-rows:240px_160px]" : ""} ${images.length === 4 ? "grid-cols-2 [grid-template-rows:240px_160px]" : ""} ${
+                images.length > 4 ? "grid-cols-6 [grid-template-rows:240px_160px] " : ""
+              }`}
             >
               {images.map((image, index) => {
                 return (
@@ -183,45 +177,39 @@ const Post = ({ id, author, createdAt, likes, comments, shares, audience, images
 
           <div className="flex justify-between items-center px-3 ">
             {likes.length > 0 && (
-              <div className="flex items-center gap-1">
-                <div className="grid grid-flow-col grid-cols-10">
-                  {likes.some((like) => like.variant === "like") && (
-                    <div className="w-5 h-5 p-0.5 bg-[--fb-color] border border-[--off-bg-main] rounded-full flex justify-center items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
-                        <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
-                      </svg>
-                    </div>
-                  )}
-                  {likes.some((like) => like.variant === "love") && (
+              <div className="flex items-center gap-4">
+                <div className="grid grid-flow-col [grid-template-columns:repeat(auto-fit,15px)]">
+                  {likes.some((like) => like.like_role === "like") && <LikeIcon width="20px" height="20px" border="1px solid var(--off-bg-main)" />}
+                  {likes.some((like) => like.like_role === "love") && (
                     <div className="w-5 h-5 p-0.5 bg-[--fb-colors-red] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                         <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                       </svg>
                     </div>
                   )}
-                  {likes.some((like) => like.variant === "care") && (
-                    <div className="w-5 h-5 p-0.5 bg-[--fb-color] border border-[--off-bg-main] rounded-full flex justify-center items-center">
+                  {likes.some((like) => like.like_role === "care") && (
+                    <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                         <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                       </svg>
                     </div>
                   )}
-                  {likes.some((like) => like.variant === "haha") && (
-                    <div className="w-5 h-5 p-0.5 bg-[--fb-color] border border-[--off-bg-main] rounded-full flex justify-center items-center">
+                  {likes.some((like) => like.like_role === "haha") && (
+                    <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                         <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                       </svg>
                     </div>
                   )}
-                  {likes.some((like) => like.variant === "sad") && (
-                    <div className="w-5 h-5 p-0.5 bg-[--fb-color] border border-[--off-bg-main] rounded-full flex justify-center items-center">
+                  {likes.some((like) => like.like_role === "sad") && (
+                    <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                         <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                       </svg>
                     </div>
                   )}
-                  {likes.some((like) => like.variant === "wow") && (
-                    <div className="w-5 h-5 p-0.5 bg-[--fb-color] border border-[--off-bg-main] rounded-full flex justify-center items-center">
+                  {likes.some((like) => like.like_role === "wow") && (
+                    <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                         <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                       </svg>
@@ -245,19 +233,7 @@ const Post = ({ id, author, createdAt, likes, comments, shares, audience, images
             </div>
           </div>
           <div className="flex items-center justify-between border-t border-[--off-text-main-off] mx-4 py-1 px-6">
-            <div onClick={() => toggleLike()} className={`relative group py-1.5 px-6 rounded-md flex items-center justify-center gap-2  cursor-pointer hover:bg-[--off-bg-main-off]`}>
-              {like ? (
-                <></>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--off-text-main-off]">
-                  <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
-                </svg>
-              )}
-              <p className="text-[--off-text-main-off] font-semibold">Like</p>
-              <div className="absolute hidden group-hover:flex -top-2 left-0 bg-[--off-bg-main-off]">
-                <div className="hover:bg-[--off-bg-main-off-hover] rounded-full p-1"></div>
-              </div>
-            </div>
+            <LikeButton likes={likes} postId={id} setPostLikes={setPostLikes} />
             <div onClick={() => ""} className="py-1.5 px-6 rounded-md flex items-center justify-center gap-2 cursor-pointer hover:bg-[--off-bg-main-off]">
               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--off-text-main-off]">
                 <path d="M320-520q17 0 28.5-11.5T360-560q0-17-11.5-28.5T320-600q-17 0-28.5 11.5T280-560q0 17 11.5 28.5T320-520Zm160 0q17 0 28.5-11.5T520-560q0-17-11.5-28.5T480-600q-17 0-28.5 11.5T440-560q0 17 11.5 28.5T480-520Zm160 0q17 0 28.5-11.5T680-560q0-17-11.5-28.5T640-600q-17 0-28.5 11.5T600-560q0 17 11.5 28.5T640-520ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />

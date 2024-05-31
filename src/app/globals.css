@@ -4,7 +4,6 @@
 
 @layer base {
   html {
-    /* --fb-color: #0866ff; */
     --fb-color: #ff9408;
     --fb-color-off: #70a7ff79;
     --fb-color-off-text: #426fb8;
@@ -18,6 +17,7 @@
     --primary-button-background: #0866ff;
     --secondary-icon: hsl(0, 0%, 20%);
     --primary-icon: hsl(0, 0%, 15%);
+    --app-colors-blue: #0866ff;
     --app-colors-red: #df3225;
     --app-colors-green: #31ee5a;
     --app-colors-dirty-green: #7ec033;
@@ -26,7 +26,6 @@
   }
   html.dark_mode {
     /* --fb-color: #0866ff; */
-    --fb-color: #ff9408;
     --fb-color-off: #70a7ff79;
     --fb-color-off-text: #adcdff;
     --bg-main: hsl(0, 0%, 10%);
@@ -39,10 +38,6 @@
     --primary-button-background: #0866ff;
     --secondary-icon: hsl(0, 0%, 80%);
     --primary-icon: hsl(0, 0%, 85%);
-    --app-colors-red: #df3225;
-    --app-colors-green: #31ee5a;
-    --app-colors-dirty-green: #7ec033;
-    --app-colors-yellow: #ffc72c;
   }
   *::before,
   *::after {

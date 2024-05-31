@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import CreatePost from "./CreatePost"
 
 type newPostProps = {
@@ -16,7 +15,7 @@ const NewPost = ({ firstName }: newPostProps) => {
     <>
       <div className={`bg-[--off-bg-main] shadow-md py-2 px-2 lg:px-4 rounded-md w-[450px] lg:w-[500px] flex flex-col`}>
         <div onClick={() => setCreatePostOpen(true)} className="flex gap-1 my-2 font-medium">
-          <Image src={`/profile-image.jpg`} alt="profile" width={32} height={32} className={`rounded-full object-cover h-10 w-10`} />
+          <Image src={`/avatar.jpg`} alt="profile" width={32} height={32} className={`rounded-full object-cover h-10 w-10`} />
           <div className="px-3 py-2 rounded-full bg-[--bg-main] dark:bg-[--off-bg-main] w-full">
             <p className="font-medium text-[--off-text-main]">{`What's on your mind, ${firstName}?`}</p>
           </div>

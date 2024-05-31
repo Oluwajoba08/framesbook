@@ -1,8 +1,16 @@
-import React from 'react'
+import React from "react"
+import FriendReq from "./FriendReq"
+import getFR from "@/lib/getFR"
+import FRSlider from "./FRSlider"
 
-const FriendRequests = () => {
+const FriendRequests = async () => {
+  const people = await getFR()
   return (
-    <div>FriendRequests</div>
+    <FRSlider>
+      {people.map(({ id, image, link, mutualFriends, name }, index) => {
+        return <FriendReq id={id} image={image} link={link} mutualFriends={mutualFriends} name={name} key={id} />
+      })}
+    </FRSlider>
   )
 }
 
