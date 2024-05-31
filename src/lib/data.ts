@@ -1,4 +1,5 @@
 import { prisma } from "@/app/db"
+import { like } from "./definitions"
 
 export async function createPost(content: string, images?: string) {
   await prisma.posts.create({
@@ -110,15 +111,34 @@ export async function deletePost(id: string) {
 //   })
 // }
 
-// export async function likePost(id: string, role: string) {
-//   const data = await prisma.like.create({
-//     data: {
-//       post_id: Number(id),
-//       liker_id: Number(id),
-//       like_role: role
-//     },
-//   })
-// }
+export async function likePost(postId: string, role: string, likerId: string) {
+  // const data = await prisma.like.create({
+  //   data: {
+  //     post_id: postId,
+  //     liker_id: likerId,
+  //     like_role: role,
+  //   },
+  // })
+}
+
+export async function unLikePost(postId: string, userId: string) {
+  // const data = await prisma.like.delete({
+  //   where: {
+  //     AND: [{ liker_id: userId }, { post_id: postId }],
+  //   },
+  // })
+}
+
+export async function getLikes(id: string) {
+  // const data = await prisma.likes.findMany({
+  //   where: {
+  //     post_id: id,
+  //   },
+  // })
+  const data: like[] = []
+  return data
+}
+
 // export async function likeComment(id: string, role: string) {
 //   const data = await prisma.like.create({
 //     data: {
@@ -135,11 +155,6 @@ export async function deletePost(id: string) {
 //       liker_id: Number(id),
 //       like_role: role
 //     },
-//   })
-// }
-// export async function unLikePost(id: string) {
-//   const data = await prisma.like.delete({
-//     where: { post_id: 435 },
 //   })
 // }
 // export async function unLikeComment(id: string) {
