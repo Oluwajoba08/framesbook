@@ -316,6 +316,7 @@ model like {
   comment    comments? @relation("like_comment", fields: [comment_id], references: [id])
   reply      replies?  @relation("like_reply", fields: [reply_id], references: [id])
 
+  @@unique([liker_id, post_id])
   @@schema("public")
 }
 
