@@ -1,0 +1,22 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" width="48" height="48">
+	<title>thumb_up_FILL0_wght400_GRAD0_opsz24-svg</title>
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="m480.5 818c-188.85 0-341.5-152.65-341.5-341.5 0-188.85 152.65-341.5 341.5-341.5 188.85 0 341.5 152.65 341.5 341.5 0 188.85-152.65 341.5-341.5 341.5z"/>
+		</clipPath>
+		<linearGradient id="g1" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(330.555,960,-960,330.555,314.723,0)">
+			<stop offset="0" stop-color="#ff657c"/>
+			<stop offset=".01" stop-color="#ff657c"/>
+			<stop offset=".99" stop-color="#ec3653"/>
+			<stop offset="1" stop-color="#ec3653"/>
+		</linearGradient>
+	</defs>
+	<style>
+		.s0 { fill: #ffffff } 
+	</style>
+	<g clip-path="url(#cp1)">
+		<path id="Layer 4" class="s0" d="m480.5 818c-188.8 0-341.5-152.7-341.5-341.5 0-188.8 152.7-341.5 341.5-341.5 188.8 0 341.5 152.7 341.5 341.5 0 188.8-152.7 341.5-341.5 341.5z"/>
+		<rect width="960" height="960" id="Gradient Fill 2 copy" style="fill: url(#g1)"/>
+	</g>
+	<path id="Color Fill 1" class="s0" d="m476.8 354.4c0 0 142.4-87.3 202.1 27.5 69.6 133.9-206.7 303.6-206.7 303.6 0 0-240.4-181.5-183.8-299 59.7-124 188.4-32.1 188.4-32.1z"/>
+</svg>
