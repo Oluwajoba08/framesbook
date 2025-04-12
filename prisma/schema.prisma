@@ -383,7 +383,6 @@ model user {
   shares         shares[]
   page_follows   pages[]    @relation("user_follow_pages")
   groups_in      group[]    @relation("user_in_group")
-  // active         Boolean    @default(false)
 
   @@schema("public")
 }

@@ -80,3 +80,16 @@ export type postProps = {
   images?: image[]
   group?: group
 }
+
+export type feelingsType = {
+  id: string
+  type: string
+  emoji: string
+}
+
+export type ApiResponse<T = any> = {
+  success: boolean
+  message?: string
+  data?: T
+  errors?: Record<string, string>
+}

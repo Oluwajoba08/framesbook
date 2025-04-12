@@ -2,8 +2,8 @@ import React from "react"
 
 const StoryPageSkeleton = () => {
   return (
-    <div className="w-full skeleton flex">
-      <div className="mt-14 overflow-y-scroll bg-[--off-bg-main] flex flex-col w-[360px] p-3">
+    <div className="w-full skeleton grid [grid-template-columns:360px_1fr]">
+      <div className="mt-14 overflow-y-scroll bg-[--off-bg-main] flex flex-col p-3">
         <p className="text-2xl font-bold">Stories</p>
         <div className="flex flex-col w-full">
           <p className="font-medium my-3">Your Story</p>

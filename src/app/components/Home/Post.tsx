@@ -8,9 +8,13 @@ import HidePost from "./HidePost"
 import Loading from "../Loading"
 import LikeIcon from "../svg/Like"
 import LikeButton from "./LikeButton"
-// import TimeAgo from 'react-timeago'
+// import ReactTimeAgo from "react-time-ago"
 
-const Post = ({ id, author, createdAt, likes, comments, shares, audience, images, content, group }: postProps) => {
+interface props extends postProps {
+  currentUserId?: string
+}
+
+const Post = ({ id, author, createdAt, likes, comments, shares, audience, images, content, group, currentUserId }: props) => {
   const [postOptionsOpen, setPostOptionsOpen] = useState(false)
   const [hidePost, setHidePost] = useState(false)
   const [seeMore, setSeeMore] = useState(false)
@@ -45,9 +49,10 @@ const Post = ({ id, author, createdAt, likes, comments, shares, audience, images
                   <div className="flex items-center text-sm text-[--off-text-main]">
                     {group && <p className="font-semibold">{group.name}</p>}
                     {group && <span className="aspect-square w-1 rounded-full bg-[--off-text-main] mx-1"></span>}
-                    <p>
+                    {/* <p>
                       {createdAt.getMinutes()} minute{createdAt.getMinutes() > 1 && "s"} ago
-                    </p>
+                    </p> */}
+                    {/* <ReactTimeAgo date={createdAt} locale="en-US" /> giving errors */}
                     <span className="aspect-square w-1 rounded-full bg-[--off-text-main] mx-1"></span>
                     {audience === "public" && (
                       <div className="flex justify-center items-center w-4 h-4">

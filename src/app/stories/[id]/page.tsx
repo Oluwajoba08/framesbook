@@ -8,7 +8,7 @@ const Story = ({ params }: { params: { id: string } }) => {
     <>
       <StoryNavbar />
       <Suspense fallback={<StoryPageSkeleton />}>
-        <StoryContent />
+        <StoryContent id={params.id} />
       </Suspense>
     </>
   )

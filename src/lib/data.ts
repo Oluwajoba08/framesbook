@@ -119,6 +119,7 @@ export async function likePost(postId: string, role: string, likerId: string) {
   //     like_role: role,
   //   },
   // })
+  console.log("post liked")
 }
 
 export async function unLikePost(postId: string, userId: string) {
@@ -127,6 +128,7 @@ export async function unLikePost(postId: string, userId: string) {
   //     AND: [{ liker_id: userId }, { post_id: postId }],
   //   },
   // })
+  console.log("post unliked")
 }
 
 export async function getLikes(id: string) {

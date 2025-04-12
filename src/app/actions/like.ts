@@ -12,6 +12,7 @@ export async function likeThisPost(postId: postProps["id"], likes: like[], role:
   const { data, error } = await supabase.auth.getUser()
   if (error || !data?.user) {
     // redirect("/login")
+    console.log("User not logged in")
   }
 
   const like = await likePost(postId, role, "ere435")

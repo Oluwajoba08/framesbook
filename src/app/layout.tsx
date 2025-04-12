@@ -4,11 +4,11 @@ import "./globals.css"
 import NewMessage from "./components/NewMessage"
 import Navbar from "./components/Navbar"
 import ThemeProvider from "./providers/ThemeProvider"
-// import { Provider } from 'react-redux'
-// import { store } from './store'
 import { redirect } from "next/navigation"
 import { createClient } from "@/utils/supabase/server"
-// import { usePathname } from "next/navigation"
+import { FeelingProvider } from "@/app/providers/FeelingProvider"
+import ConditionalLayout from "./components/ConditionalLayout"
+import { Toaster } from "sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,7 +18,6 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // const pathname = usePathname()
   // const supabase = createClient()
 
   // const { data, error } = await supabase.auth.getUser()
@@ -28,15 +27,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <ThemeProvider>
-      {/* <Provider store={store}> */}
-      <html lang="en">
-        <body className={inter.className}>
-          <Navbar />
-          {children}
-          <NewMessage />
-        </body>
-      </html>
-      {/* </Provider> */}
+      <FeelingProvider>
+        <html lang="en">
+          <body className={inter.className}>
+            <Toaster />
+            <ConditionalLayout />
+            {children}
+          </body>
+        </html>
+      </FeelingProvider>
     </ThemeProvider>
   )
 }

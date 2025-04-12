@@ -4,13 +4,17 @@ import { createClient } from "@/utils/supabase/server"
 import { getPosts } from "@/lib/data"
 import BookmarksUI from "./components/Bookmarks/Bookmarks"
 import RightSidebar from "./components/RightSidebar"
-import NewPost from "./components/Home/NewPost"
+import NewPost from "./components/Home/NewPost/NewPost"
 import Stories from "./components/Home/Stories"
 import StorySkeleton from "./components/skeleton/StorySkeleton"
 import PostSkeleton from "./components/skeleton/PostSkeleton"
 import Posts from "./components/Home/Posts"
 import PeopleYouMayKnow from "./components/Home/PeopleYouMayKnow"
+import TimeAgo from "javascript-time-ago"
+import en from "javascript-time-ago/locale/en"
 // import EmptyStory from "./components/Home/EmptyStory"
+
+// TimeAgo.addDefaultLocale(en)
 
 export default async function Home() {
   // const supabase = createClient()
@@ -30,12 +34,12 @@ export default async function Home() {
         </Suspense>
         {/* <EmptyStory /> */}
         <div className="min-[735px]:w-[calc(100vw-278px)] lg:w-auto flex justify-center">
-          <NewPost firstName="Oluwajoba" />
+          <NewPost page="normal" firstName="Oluwajoba" />
         </div>
         <Suspense fallback={<PostSkeleton />}>
-          <Posts />
+          <Posts /> {/* Add session as prop later */}
         </Suspense>
-        <PeopleYouMayKnow />
+        <PeopleYouMayKnow /> {/*Dynamically inject later */}
       </div>
       <BookmarksUI />
       <div className="hidden min-[735px]:flex lg:hidden w-[260px] h-full"></div>

@@ -5,6 +5,7 @@ import FRSlider from "./FRSlider"
 
 const FriendRequests = async () => {
   const people = await getFR()
+
   return (
     <FRSlider>
       {people.map(({ id, image, link, mutualFriends, name }, index) => {

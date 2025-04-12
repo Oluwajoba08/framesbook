@@ -53,7 +53,7 @@ const StoryNavbar = () => {
   return (
     <nav className="h-14 flex items-center fixed top-0 w-full bg-transparent">
       <div className="flex gap-2 px-4 h-full items-center bg-[--off-bg-main] border-b border-b-[--off-bg-main-off] w-[360px]">
-        <button className="flex items-center justify-center p-1 w-10 h-10 rounded-full bg-[--bg-main]">
+        <button onClick={() => ""} className="flex items-center justify-center p-1 w-10 h-10 rounded-full bg-[--bg-main]">
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--text-main]">
             <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </svg>
@@ -71,10 +71,7 @@ const StoryNavbar = () => {
 
       <div className="absolute right-0 px-4 flex justify-center items-center pr-4 pl-2 h-full">
         <div className="hidden xl:flex mr-2 relative group h-full items-center justify-center">
-          <button
-            className={`p-2 rounded-full ${state.menuOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`}
-            onClick={() => dispatch({ type: "MENU" })}
-          >
+          <button className={`p-2 rounded-full ${state.menuOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`} onClick={() => dispatch({ type: "MENU" })}>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" className={`${state.menuOpen ? "text-[--fb-color]" : "text-[--primary-icon]"}`}>
               <path d="M12 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm8 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm8 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm8 16a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm8 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 17a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
             </svg>
@@ -82,10 +79,7 @@ const StoryNavbar = () => {
           <p className="text-sm px-3 py-2 bg-white rounded-lg opacity-75 text-black absolute top-[60px] left-1/2 -translate-x-1/2 z-10 hidden group-hover:flex shadow-md">Menu</p>
         </div>
         <div className="xl:hidden mr-2 relative group h-full flex items-center justify-center">
-          <button
-            className={`p-2 rounded-full ${state.addOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`}
-            onClick={() => dispatch({ type: "ADD" })}
-          >
+          <button className={`p-2 rounded-full ${state.addOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`} onClick={() => dispatch({ type: "ADD" })}>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" className={`${state.addOpen ? "text-[--fb-color]" : "text-[--primary-icon]"}`}>
               <path d="M11 19a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6V5a1 1 0 1 0-2 0v6H5a1 1 0 1 0 0 2h6v6z"></path>
             </svg>
@@ -93,10 +87,7 @@ const StoryNavbar = () => {
           <p className="text-sm px-3 py-2 bg-white rounded-lg opacity-75 text-black absolute top-[60px] left-1/2 -translate-x-1/2 z-10 hidden group-hover:flex shadow-md">Add</p>
         </div>
         <div className="mr-2 relative group h-full flex items-center justify-center">
-          <button
-            className={`p-2 rounded-full ${state.messengerOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`}
-            onClick={() => dispatch({ type: "MESSENGER" })}
-          >
+          <button className={`p-2 rounded-full ${state.messengerOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`} onClick={() => dispatch({ type: "MESSENGER" })}>
             <svg viewBox="0 0 12 13" width="20" height="20" fill="currentColor" className={`${state.messengerOpen ? "text-[--fb-color]" : "text-[--primary-icon]"}`}>
               <g fillRule="evenodd" transform="translate(-450 -1073)">
                 <path d="m459.603 1077.948-1.762 2.851a.89.89 0 0 1-1.302.245l-1.402-1.072a.354.354 0 0 0-.433.001l-1.893 1.465c-.253.196-.583-.112-.414-.386l1.763-2.851a.89.89 0 0 1 1.301-.245l1.402 1.072a.354.354 0 0 0 .434-.001l1.893-1.465c.253-.196.582.112.413.386M456 1073.5c-3.38 0-6 2.476-6 5.82 0 1.75.717 3.26 1.884 4.305.099.087.158.21.162.342l.032 1.067a.48.48 0 0 0 .674.425l1.191-.526a.473.473 0 0 1 .32-.024c.548.151 1.13.231 1.737.231 3.38 0 6-2.476 6-5.82 0-3.344-2.62-5.82-6-5.82"></path>
@@ -111,10 +102,7 @@ const StoryNavbar = () => {
           </svg>
         </button>
         <div className="mr-2 relative group h-full flex items-center justify-center">
-          <button
-            className={`p-2 rounded-full ${state.notificationOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`}
-            onClick={() => dispatch({ type: "NOTIFICATION" })}
-          >
+          <button className={`p-2 rounded-full ${state.notificationOpen ? "bg-[--fb-color-off]" : "bg-[--off-bg-main-off]"} hover:bg-[--off-bg-main-off-hover] duration-100 cursor-pointer`} onClick={() => dispatch({ type: "NOTIFICATION" })}>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" className={`${state.notificationOpen ? "text-[--fb-color]" : "text-[--primary-icon]"}`}>
               <path d="M3 9.5a9 9 0 1 1 18 0v2.927c0 1.69.475 3.345 1.37 4.778a1.5 1.5 0 0 1-1.272 2.295h-4.625a4.5 4.5 0 0 1-8.946 0H2.902a1.5 1.5 0 0 1-1.272-2.295A9.01 9.01 0 0 0 3 12.43V9.5zm6.55 10a2.5 2.5 0 0 0 4.9 0h-4.9z"></path>
             </svg>

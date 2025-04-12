@@ -6,7 +6,7 @@ const Posts = () => {
   const posts = getPosts()
 
   return posts.map((post, index) => {
-    return <Post {...post} />
+    return <Post key={post.id} {...post} />
   })
 }
 
