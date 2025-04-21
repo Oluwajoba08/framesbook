@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, Suspense } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { like, postProps } from "@/lib/definitions"
+import { formatPostDate } from "@/lib/formatPostDate"
 import HidePost from "./HidePost"
 import Loading from "../Loading"
 import LikeIcon from "../svg/Like"
@@ -23,6 +24,7 @@ const Post = (props: ExtendedProps) => {
   const [expandPost, setExpandPost] = useState(false)
   const [postLikes, setPostLikes] = useState<like[]>([])
   const postOptionsRef = useRef(null)
+  const formattedDate = formatPostDate(props.createdAt)
 
   function closeOverlayAndHide() {
     setPostOptionsOpen(false)
