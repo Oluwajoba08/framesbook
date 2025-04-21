@@ -4,7 +4,7 @@
 
 // const useUsername = () => {
 //   const [userName, setUserName] = useState("")
-//   const supabase = createClient()
+//   const supabase = await createClient()
 
 //   useEffect(() => {
 //     const getUserName = async () => {

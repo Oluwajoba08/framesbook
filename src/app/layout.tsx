@@ -1,14 +1,10 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import NewMessage from "./components/NewMessage"
-import Navbar from "./components/Navbar"
+import { Toaster } from "sonner"
 import ThemeProvider from "./providers/ThemeProvider"
-import { redirect } from "next/navigation"
-import { createClient } from "@/utils/supabase/server"
 import { FeelingProvider } from "@/app/providers/FeelingProvider"
 import ConditionalLayout from "./components/ConditionalLayout"
-import { Toaster } from "sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,13 +14,6 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // const supabase = createClient()
-
-  // const { data, error } = await supabase.auth.getUser()
-  // if (pathname === "/login" && (error || !data?.user)) {
-  //   redirect("/login")
-  // }
-
   return (
     <ThemeProvider>
       <FeelingProvider>

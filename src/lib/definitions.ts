@@ -20,20 +20,28 @@ export type mutualFriendsProps = {
   _image: string
 }
 
-export type user = {
+export type User = {
   id: string
   name: string
   profileImage: string
   coverImage: string
   profileLink: string
-  friends: user[]
+  friends: User[]
 }
 
-export type group = {
+export type Group = {
   name: string
   profileLink: string
   profileImage: string
-  members: user[]
+  members: User[]
+  createdAt: Date
+}
+
+export type Page = {
+  name: string
+  profileLink: string
+  profileImage: string
+  followers: User[]
   createdAt: Date
 }
 
@@ -42,28 +50,32 @@ export type like = {
   liker_id: String
   post_id?: String
   comment_id?: String
-  reply_id?: String
   like_role: "like" | "love" | "haha" | "care" | "sad" | "wow"
-  liker: user
+  liker: User
   post?: postProps
-  author: user
-  comment?: comment
-  reply?: comment
+  author: User
+  comment?: Comment
 }
 
-export type comment = {
-  author: user
-  content: string
+export type Comment = {
+  id: string
+  author: User
+  authorId: String
+  content?: string
   likes: like[]
-  replies: comment[]
   images?: string[]
+  parent?: Comment
+  postId: string
+  createdAt: Date
+  updatedAt: Date
 }
 
-export type share = {
-  author: user
+export type Share = {
+  author: User
+  createdAt: Date
 }
 
-export type image = {
+export type Image = {
   id: string
   src: string
 }
@@ -72,13 +84,16 @@ export type postProps = {
   id: string
   content: string
   createdAt: Date
-  author: user
+  updatedAt?: Date
+  authorId: string
+  author: User
   audience: "public" | "friends" | "friends of friends"
   likes: like[]
-  comments: comment[]
-  shares: share[]
-  images?: image[]
-  group?: group
+  comments: Comment[]
+  shares: Share[]
+  images?: Image[]
+  group?: Group
+  page?: Page
 }
 
 export type feelingsType = {

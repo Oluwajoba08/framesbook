@@ -6,7 +6,7 @@ import { createClient } from "@/utils/supabase/server"
 // import { getProfile } from "@/lib/data"
 
 const ProfilePage = async ({ params }: { params: { id: string } }) => {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // const posts = await getProfile(params.id)
   // const { data, error } = await supabase.auth.getUser()

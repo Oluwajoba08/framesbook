@@ -4,36 +4,22 @@ import React, { useState, useEffect, useRef, Suspense } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { like, postProps } from "@/lib/definitions"
-import HidePost from "./HidePost"
-import Loading from "../Loading"
 import LikeIcon from "../svg/Like"
 import LikeButton from "./LikeButton"
-import ExpandedPost from "./ExpandedPost"
-import Comments from "../CommentSection" // TODO, get few comments relevant to user
+import CommentSection from "../CommentSection"
 // import ReactTimeAgo from "react-time-ago"
 
 export interface ExtendedProps extends postProps {
   currentUserId?: string
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Post = (props: ExtendedProps) => {
+const ExpandedPost = (props: ExtendedProps) => {
   const [postOptionsOpen, setPostOptionsOpen] = useState(false)
-  const [hidePost, setHidePost] = useState(false)
-  const [seeMore, setSeeMore] = useState(false)
-  const [expandPost, setExpandPost] = useState(false)
+  const [newComment, setNewComment] = useState("")
   const [postLikes, setPostLikes] = useState<like[]>([])
   const postOptionsRef = useRef(null)
-
-  function closeOverlayAndHide() {
-    setPostOptionsOpen(false)
-    setHidePost(true)
-  }
-
-  function handleExpand(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    // if (e.currentTarget.id === "" || ) {
-    setExpandPost(true)
-    // }
-  }
+  const commentRef = useRef(null)
 
   function likePost() {
     if (!props.currentUserId) {
@@ -41,16 +27,40 @@ const Post = (props: ExtendedProps) => {
     }
   }
 
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target === commentRef.current) {
+      props.setModalOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden"
+
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [])
+
   return (
-    <>
-      <section className="flex flex-col shadow-md gap-1 rounded-md bg-[--off-bg-main] w-[450px] lg:w-[500px] overflow-hidden">
-        {hidePost ? (
-          <Suspense fallback={<Loading />}>
-            <HidePost id={props.id} group={props.group} author={props.author} setHidePost={setHidePost} />
-          </Suspense>
-        ) : (
-          <>
-            <div onClick={handleExpand} className="flex pt-4 px-4 flex-col gap-2">
+    <div ref={commentRef} onClick={(e) => handleClick(e)} className="absolute flex justify-center items-center inset-0 bg-[#ffffffa8] z-[1000]">
+      <section className="relative flex flex-col shadow-md rounded-md bg-[--off-bg-main] w-[720px] lg:w-[900px] h-[600px] overflow-hidden">
+        <div className="flex justify-between items-center border-b border-[--off-bg-main-off-hover] py-3 px-4">
+          <div className={`invisible flex justify-center items-center rounded-full cursor-pointer bg-[--off-bg-main-off] w-8 h-8 p-1 `}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--text-main]">
+              <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+            </svg>
+          </div>
+          <p className="font-bold text-xl">{`Oluwajoba's Post`}</p>
+          <div onClick={() => props.setModalOpen(false)} className={`flex justify-center items-center rounded-full cursor-pointer bg-[--off-bg-main-off] w-8 h-8 p-1`}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--text-main]">
+              <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+          </div>
+        </div>
+
+        <div className="flex flex-col overflow-y-scroll">
+          <div className="flex flex-col">
+            <div className="px-4 py-3">
               <div className="flex justify-between items-center">
                 <div className="flex gap-3">
                   <div className="flex items-center">
@@ -66,8 +76,8 @@ const Post = (props: ExtendedProps) => {
                       {props.group && <p className="font-semibold">{props.group.name}</p>}
                       {props.group && <span className="aspect-square w-1 rounded-full bg-[--off-text-main] mx-1"></span>}
                       {/* <p>
-                        {createdAt.getMinutes()} minute{createdAt.getMinutes() > 1 && "s"} ago
-                      </p> */}
+                            {createdAt.getMinutes()} minute{createdAt.getMinutes() > 1 && "s"} ago
+                        </p> */}
                       {/* <ReactTimeAgo date={createdAt} locale="en-US" /> giving errors */}
                       <span className="aspect-square w-1 rounded-full bg-[--off-text-main] mx-1"></span>
                       {props.audience === "public" && (
@@ -82,6 +92,7 @@ const Post = (props: ExtendedProps) => {
                     </div>
                   </div>
                 </div>
+
                 <div className="flex justify-center items-center gap-1 relative">
                   <div onClick={() => setPostOptionsOpen(true)} className="flex justify-center items-center rounded-full cursor-pointer hover:bg-[--off-bg-main-off] w-8 h-8 p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--text-main]">
@@ -90,7 +101,7 @@ const Post = (props: ExtendedProps) => {
                   </div>
                   {postOptionsOpen && (
                     <>
-                      <div ref={postOptionsRef} className={`fixed inset-0 z-[59]`} onClick={() => setPostOptionsOpen(false)}></div>
+                      <div ref={postOptionsRef} className={`fixed inset-0 z-[1001]`} onClick={() => setPostOptionsOpen(false)}></div>
                       <div className={`absolute shad-css z-[60] py-3 flex flex-col top-8 rounded-md overflow-hidden right-4 w-[340px] bg-[--off-bg-main]`}>
                         <div className={`flex px-4 py-1 hover:bg-[--off-bg-main-off] cursor-pointer`}>
                           <div className=""></div>
@@ -109,7 +120,7 @@ const Post = (props: ExtendedProps) => {
                           <p className={`font-semibold`}>Embed</p>
                         </div>
                         <span aria-hidden="true" className={`bg-[--off-text-main-off] h-px w-11/12 my-1 mx-auto`}></span>
-                        <div onClick={() => closeOverlayAndHide()} className={`flex px-4 py-1 hover:bg-[--off-bg-main-off] cursor-pointer`}>
+                        <div onClick={() => setPostOptionsOpen(false)} className={`flex px-4 py-1 hover:bg-[--off-bg-main-off] cursor-pointer`}>
                           <div className=""></div>
                           <div className={`flex flex-col`}>
                             <p className={`font-semibold`}>Hide post</p>
@@ -147,28 +158,14 @@ const Post = (props: ExtendedProps) => {
                       </div>
                     </>
                   )}
-
-                  <div onClick={() => setHidePost(true)} className="flex justify-center items-center rounded-full cursor-pointer hover:bg-[--off-bg-main-off] w-8 h-8 p-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--text-main]">
-                      <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg>
-                  </div>
                 </div>
               </div>
-              <div>
-                {props.content.length > 280 && !seeMore ? (
-                  <p>
-                    {props.content.slice(0, 269)}
-                    <span onClick={() => setSeeMore(true)} className="font-semibold cursor-pointer">
-                      ...See more
-                    </span>
-                  </p>
-                ) : (
+              {props.content && (
+                <div>
                   <p>{props.content}</p>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-
             {props.images && (
               <div
                 className={`grid gap-0.5 w-full ${props.images?.length === 2 ? "grid-cols-2" : ""} ${props.images?.length === 3 ? "grid-cols-2 [grid-template-rows:240px_160px]" : ""} ${
@@ -197,7 +194,6 @@ const Post = (props: ExtendedProps) => {
                 })}
               </div>
             )}
-
             <div className="flex justify-between items-center px-3 ">
               {props.likes.length > 0 && (
                 <div className="flex items-center gap-4">
@@ -270,16 +266,28 @@ const Post = (props: ExtendedProps) => {
                 <p className="text-[--off-text-main-off] font-semibold">Share</p>
               </div>
             </div>
-
-            <div className="flex flex-col">
-              <p></p>
-            </div>
-          </>
-        )}
+          </div>
+          <CommentSection {...props} />
+        </div>
+        {/* Bottom form */}
+        <div className="flex gap-2 px-4 py-3 relative">
+          <div className="flex items-center">
+            <Link href={`/${props.author.profileLink}`} className={`w-10 h-10 rounded-full overflow-hidden flex justify-center items-center`}>
+              <Image src={`/${props.author.profileImage}`} alt="profile-image" width={48} height={48} className={`object-cover w-10 h-10`} />
+            </Link>
+          </div>
+          <textarea className="p-2 bg-[--off-bg-main-off] text-neutral-400" placeholder={`Comment as ${"Oluwajoba Bukola"}`} value={newComment} draggable={false} onChange={(e) => setNewComment(e.target.value)} />
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
+            <span>😎</span>
+            <span>🙂</span>
+            <span>📷</span>
+            <span>💳</span>
+            <span>🧧</span>
+          </div>
+        </div>
       </section>
-      {expandPost && <ExpandedPost {...props} setModalOpen={setExpandPost} />}
-    </>
+    </div>
   )
 }
 
-export default Post
+export default ExpandedPost

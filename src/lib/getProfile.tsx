@@ -3,10 +3,10 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-const getProfile = async (link: string) => {
+const getProfile = async (id: string) => {
   const posts = await prisma.posts.findMany({
     where: {
-      author_id: Number(link),
+      author_id: Number(id),
     },
     // select: {
 

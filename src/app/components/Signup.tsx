@@ -8,7 +8,7 @@ import { Loader } from "lucide-react"
 import { signup } from "../login/actions"
 import { toast } from "sonner"
 
-type setBoolProps = {
+type PageProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -27,7 +27,7 @@ const DAYS = Array.from({ length: 31 }, (_, i) => i + 1)
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const YEARS = Array.from({ length: MAX_NUMBER_OF_YEARS }, (_, i) => new Date().getFullYear() - MAX_NUMBER_OF_YEARS + i + 1).reverse()
 
-const Signup = ({ setModalOpen }: setBoolProps) => {
+const Signup = ({ setModalOpen }: PageProps) => {
   const [formData, setFormData] = useState<formDataType>({ firstname: "", lastname: "", email: "", password: "", gender: "" })
   const [errors, setErrors] = useState<formError>({})
   const router = useRouter()

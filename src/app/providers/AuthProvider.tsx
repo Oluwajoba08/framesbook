@@ -11,7 +11,7 @@ type ContextType = {}
 export const AuthContext = createContext({})
 
 export const AuthProvider = async ({ children }: { children: React.ReactNode }) => {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data, error } = await supabase.auth.getUser()
   // if (error || !data?.user) {

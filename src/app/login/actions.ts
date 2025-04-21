@@ -8,7 +8,7 @@ import { ApiResponse } from "@/lib/definitions"
 
 export async function login(prevState: any, formData: FormData): Promise<ApiResponse> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const rawData = {
       email: formData.get("email") as string,
@@ -53,7 +53,7 @@ export async function login(prevState: any, formData: FormData): Promise<ApiResp
 
 export async function signup(prevState: any, formData: FormData): Promise<ApiResponse> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const rawData = {
       email: formData.get("email") as string,
@@ -89,12 +89,6 @@ export async function signup(prevState: any, formData: FormData): Promise<ApiRes
     const { data, error } = await supabase.auth.signUp({
       email: userData.data.email,
       password: userData.data.password,
-      options: {
-        data: {
-          firstname: userData.data.firstname,
-          lastname: userData.data.lastname,
-        },
-      },
     })
 
     if (error) {
@@ -104,20 +98,17 @@ export async function signup(prevState: any, formData: FormData): Promise<ApiRes
       }
     }
 
-    // if (data.user) { // can use prisma.profile.create
-    // const user = await prisma.user.create({
-    //   data: {
-    //     name: fullData.fisrtname + " " + fullData.lastname,
-    //     email: fullData.email,
-    //     profile: {
-    //       create: {
-    //         bio: "Hi there, I am new to framesbook.",
-    //         date_of_birth: Date(),
-    //       },
-    //     },
-    //   },
-    // })
-    // }
+    if (data.user) {
+      // can use prisma.profile.create
+      const user = await prisma.user.create({
+        data: {
+          id: data.user.id,
+          name: `${userData.data.firstname + " " + userData.data.firstname}`,
+          email: data.user.email || "unidentified",
+          date_of_birth: "",
+        },
+      })
+    }
     console.log("signup successful")
     return {
       success: true,
@@ -134,7 +125,7 @@ export async function signup(prevState: any, formData: FormData): Promise<ApiRes
 }
 
 export async function logout() {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   try {
     let { error } = await supabase.auth.signOut()

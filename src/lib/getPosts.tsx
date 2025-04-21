@@ -29,6 +29,7 @@ const getPosts = (): postProps[] => {
       audience: "public",
       likes: [],
       shares: [],
+      authorId: "242446345523",
       author: {
         name: "John Adebamigberu",
         friends: [],
@@ -74,6 +75,7 @@ const getPosts = (): postProps[] => {
       audience: "public",
       likes: [],
       shares: [],
+      authorId: "3853850835325",
       author: {
         name: "Ronald Essien",
         friends: [],
@@ -87,15 +89,3 @@ const getPosts = (): postProps[] => {
 }
 
 export default getPosts
-
-// const supabase = createClient()
-// const { data: notes } = await supabase.from("notes").select()
-//  JSON.stringify(notes, null,2)
-
-// postgres://postgres.hdlzghmxaddwzmgzkrfp:[YOUR-PASSWORD]@aws-0-eu-central-1.pooler.supabase.com:5432/postgres
-
-//
-
-// Transaction
-// Pool mode is permanently set to Transaction on port 6543
-// You can use Session mode by connecting to the pooler on port 5432 instead

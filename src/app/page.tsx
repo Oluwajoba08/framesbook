@@ -17,7 +17,7 @@ import en from "javascript-time-ago/locale/en"
 // TimeAgo.addDefaultLocale(en)
 
 export default async function Home() {
-  // const supabase = createClient()
+  // const supabase = await createClient()
 
   // const { data, error } = await supabase.auth.getUser()
   // if (error || !data?.user) {
