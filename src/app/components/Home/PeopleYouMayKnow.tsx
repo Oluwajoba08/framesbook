@@ -6,10 +6,11 @@ import type { PMYK } from "@/lib/definitions"
 
 const PeopleYouMayKnow = async () => {
   const people = await getPYMK()
+  // replace with db pymk later
   return (
     <PYMKSlider>
-      {people.map(({ id, image, link, mutualFriends, name }, index) => {
-        return <PYMK id={id} image={image} link={link} mutualFriends={mutualFriends} name={name} key={id} />
+      {people.map((props, index) => {
+        return <PYMK {...props} key={props.id} />
       })}
     </PYMKSlider>
   )

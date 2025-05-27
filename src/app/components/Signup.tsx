@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
-import { useFormState, useFormStatus } from "react-dom"
+import React, { useState, useRef, useEffect, useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Loader } from "lucide-react"
@@ -33,7 +33,7 @@ const Signup = ({ setModalOpen }: PageProps) => {
   const router = useRouter()
 
   const formRef = useRef(null)
-  const [state, formAction] = useFormState(signup, {
+  const [state, formAction] = useActionState(signup, {
     success: false,
     message: "",
     errors: {},

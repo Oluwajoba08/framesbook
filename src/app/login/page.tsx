@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useActionState } from "react";
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import Signup from "../components/Signup"
-import { useFormState, useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom";
 import { login } from "./actions"
 import { Loader } from "lucide-react"
 import { toast } from "sonner"
@@ -20,7 +20,7 @@ const Login = () => {
   const [errors, setErrors] = useState<formError>({})
   const [modalOpen, setModalOpen] = useState(false)
   const router = useRouter()
-  const [state, formAction] = useFormState(login, {
+  const [state, formAction] = useActionState(login, {
     success: false,
     message: "",
     errors: {},

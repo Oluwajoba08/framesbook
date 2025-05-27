@@ -1,7 +1,7 @@
 "use client"
 
 // import { getFeelings } from "@/lib/getFeelings" [ abstracted to provider ]
-import React, { createContext, useState, useContext, useReducer } from "react"
+import React, { createContext, useContext } from "react"
 import type { feelingsType } from "@/lib/definitions"
 
 type feelingProps = {

@@ -2,39 +2,18 @@
 
 import React, { useRef, useEffect, useState } from "react"
 import Image from "next/image"
+import Comment from "./Comment"
 import type { ExtendedProps } from "./Home/ExpandedPost"
+import { CommentProps } from "@/lib/definitions"
 
-type funcProps = {
-  id: string
-  createdAt: number
-  authorId: string
-  content: string
-}
-
-const CommentSection = ({ currentUserId, id }: ExtendedProps) => {
+const CommentSection = ({ postComments }: { postComments: CommentProps[] }) => {
   const [loading, setLoading] = useState(true)
-  const [comments, setComments] = useState<funcProps[] | undefined>([])
+  // const [comments, setComments] = useState<CommentProps[] | undefined>([])
   const commentRef = useRef(null)
 
-  function getComments(postId: string) {
-    return [
-      { id: "32920424", createdAt: Date.now(), authorId: "129130913", content: "Hello from comment section" },
-      {
-        id: "3292770424",
-        createdAt: Date.now(),
-        authorId: "129144530913",
-        content: "Hello 2 from comment section",
-      },
-    ]
-  }
+  // useEffect(() => {
 
-  useEffect(() => {
-    const data = getComments(id)
-
-    if (data) {
-      setComments(data)
-    }
-  }, [])
+  // }, [])
 
   return (
     <>

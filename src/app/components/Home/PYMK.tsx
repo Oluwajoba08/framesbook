@@ -15,7 +15,7 @@ const PYMK = ({ id, name, image, mutualFriends, link }: PMYK) => {
     y: 0,
   })
 
-  const showProfile = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const showProfile = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     setHoverCoordinates({
       x: e.pageX,
       y: e.pageY,
@@ -29,10 +29,11 @@ const PYMK = ({ id, name, image, mutualFriends, link }: PMYK) => {
         <Image src={`/${image}`} alt={`${name}'s profile image`} width={200} height={200} className="object-cover h-full w-full" />
       </div>
       <div className="flex flex-col p-2 border-x border-b border-[--off-bg-main-off-hover] rounded-b-md ">
-        <div
+        <Link
           className={`hover:underline relative`} //group
           onMouseEnter={(e) => showProfile(e)}
           onMouseLeave={() => setHover(false)}
+          href={`/${link}`}
         >
           <p ref={positionRef} className="font-semibold cursor-pointer">
             {name}
@@ -96,7 +97,7 @@ const PYMK = ({ id, name, image, mutualFriends, link }: PMYK) => {
               </div>
             </div>
           )}
-        </div>
+        </Link>
 
         <div className="flex gap-1 items-center">
           {mutualFriends.map(({ _id, _image, _name }, index) => {

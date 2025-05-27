@@ -1,15 +1,24 @@
 "use client"
 
-import React from "react"
-import Image from "next/image"
+import React, { useEffect } from "react"
+// import { useRouter } from "next/navigation"
 
-const error = () => {
+const error = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
+  // const router = useRouter()
+
+  useEffect(() => {
+    // Optional
+    console.error(error)
+  }, [error])
+
   return (
-    <div className="h-[calc(100vh-56px)] w-screen flex justify-center items-center">
-      <div className="flex flex-col gap-1">
-        <p className="font-bold text-2xl">This page isn't available right now</p>
+    <div className="h-screen flex justify-center items-center">
+      <div className="flex flex-col gap-1 items-center">
+        <p className="font-bold text-2xl">Something went wrong.</p>
         <p className="text-xl">This may be because of a technical error that we're working to get fixed. Try reloading this page.</p>
-        <button className="bg-[--fb-color] px-8 py-3 text-white">Reload Page</button>
+        <button onClick={() => reset()} className="rounded-md bg-[--fb-color] px-3 py-2 text-black flex">
+          Try again
+        </button>
       </div>
     </div>
   )

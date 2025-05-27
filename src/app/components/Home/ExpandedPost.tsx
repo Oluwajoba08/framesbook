@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, Suspense } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import type { like, postProps } from "@/lib/definitions"
+import { Audience, type like, type postProps } from "@/lib/definitions"
 import LikeIcon from "../svg/Like"
 import LikeButton from "./LikeButton"
 import CommentSection from "../CommentSection"
@@ -42,8 +42,9 @@ const ExpandedPost = (props: ExtendedProps) => {
   }, [])
 
   return (
-    <div ref={commentRef} onClick={(e) => handleClick(e)} className="absolute flex justify-center items-center inset-0 bg-[#ffffffa8] z-[1000]">
-      <section className="relative flex flex-col shadow-md rounded-md bg-[--off-bg-main] w-[720px] lg:w-[900px] h-[600px] overflow-hidden">
+    <div ref={commentRef} onClick={handleClick} className="absolute flex justify-center items-center inset-0 bg-[#ffffffa8] z-[1000]">
+      <p>Helllooo</p>
+      <section className="relative flex flex-col shadow-md rounded-md bg-[--off-bg-main] w-[720px] lg:w-[900px] h-[600px] overflow-y-scroll">
         <div className="flex justify-between items-center border-b border-[--off-bg-main-off-hover] py-3 px-4">
           <div className={`invisible flex justify-center items-center rounded-full cursor-pointer bg-[--off-bg-main-off] w-8 h-8 p-1 `}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--text-main]">
@@ -80,15 +81,15 @@ const ExpandedPost = (props: ExtendedProps) => {
                         </p> */}
                       {/* <ReactTimeAgo date={createdAt} locale="en-US" /> giving errors */}
                       <span className="aspect-square w-1 rounded-full bg-[--off-text-main] mx-1"></span>
-                      {props.audience === "public" && (
+                      {props.audience === Audience.FRIENDS && (
                         <div className="flex justify-center items-center w-4 h-4">
                           <svg className="fill-[--off-text-main] w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48">
                             <path d="M480 976q-83 0-156-31.5T197 859q-54-54-85.5-127T80 576q0-83 31.5-156T197 293q54-54 127-85.5T480 176q83 0 156 31.5T763 293q54 54 85.5 127T880 576q0 83-31.5 156T763 859q-54 54-127 85.5T480 976Zm-43-61v-82q-35 0-59-26t-24-61v-44L149 497q-5 20-7 39.5t-2 39.5q0 130 84.5 227T437 915Zm294-108q22-24 38.5-51t28-56.5q11.5-29.5 17-60.5t5.5-63q0-106-58-192.5T607 257v18q0 35-24 61t-59 26h-87v87q0 17-13.5 28T393 488h-83v88h258q17 0 28 13t11 30v127h43q29 0 51 17t30 44Z" />
                           </svg>
                         </div>
                       )}
-                      {props.audience === "friends" && <div>friends</div>}
-                      {props.audience === "friends of friends" && <div>friends of friends</div>}
+                      {props.audience === Audience.FRIENDS && <div>friends</div>}
+                      {props.audience === Audience.FRIENDS && <div>friends of friends</div>}
                     </div>
                   </div>
                 </div>
@@ -198,36 +199,36 @@ const ExpandedPost = (props: ExtendedProps) => {
               {props.likes.length > 0 && (
                 <div className="flex items-center gap-4">
                   <div className="grid grid-flow-col [grid-template-columns:repeat(auto-fit,15px)]">
-                    {props.likes.some((like) => like.like_role === "like") && <LikeIcon width="20px" height="20px" border="1px solid var(--off-bg-main)" />}
-                    {props.likes.some((like) => like.like_role === "love") && (
+                    {props.likes.some((like) => like.like_role === "LIKE") && <LikeIcon width="20px" height="20px" border="1px solid var(--off-bg-main)" />}
+                    {props.likes.some((like) => like.like_role === "LOVE") && (
                       <div className="w-5 h-5 p-0.5 bg-[--fb-colors-red] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                           <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                         </svg>
                       </div>
                     )}
-                    {props.likes.some((like) => like.like_role === "care") && (
+                    {props.likes.some((like) => like.like_role === "CARE") && (
                       <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                           <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                         </svg>
                       </div>
                     )}
-                    {props.likes.some((like) => like.like_role === "haha") && (
+                    {props.likes.some((like) => like.like_role === "HAHA") && (
                       <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                           <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                         </svg>
                       </div>
                     )}
-                    {props.likes.some((like) => like.like_role === "sad") && (
+                    {props.likes.some((like) => like.like_role === "SAD") && (
                       <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                           <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
                         </svg>
                       </div>
                     )}
-                    {props.likes.some((like) => like.like_role === "wow") && (
+                    {props.likes.some((like) => like.like_role === "WOW") && (
                       <div className="w-5 h-5 p-0.5 bg-[--app-colors-yellow] border border-[--off-bg-main] rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-white">
                           <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
@@ -267,7 +268,7 @@ const ExpandedPost = (props: ExtendedProps) => {
               </div>
             </div>
           </div>
-          <CommentSection {...props} />
+          <CommentSection postComments={props.comments} />
         </div>
         {/* Bottom form */}
         <div className="flex gap-2 px-4 py-3 relative">

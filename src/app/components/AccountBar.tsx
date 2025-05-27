@@ -2,7 +2,7 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-const AccountBar = async () => {
+const AccountBar = () => {
   return (
     <aside className={`bg-[--off-bg-main] absolute top-[50px] shad-css z-[60] right-5 rounded-md w-[350px] h-[calc(100vh-80px)] p-3 `}>
       <div className={`flex flex-col shad-css p-1 rounded-md`}>

@@ -7,8 +7,8 @@
     --fb-color: #ff9408;
     --fb-color-off: #70a7ff79;
     --fb-color-off-text: #426fb8;
-    --bg-main: hsl(200, 10%, 94%);
-    --off-bg-main: hsl(0, 0%, 100%);
+    --bg-main: hsl(201, 20%, 94%);
+    --off-bg-main: hsl(0, 0%, 97%);
     --off-bg-main-off: hsl(0, 0%, 82%);
     --off-bg-main-off-hover: hsl(0, 0%, 69%);
     --text-main: hsl(0, 0%, 5%);
@@ -25,6 +25,7 @@
     --modal-color: #eef0f1b2;
     scroll-behavior: smooth;
     --bg-neutral: hsl(0, 0%, 25%);
+    --off-bg-main-off-fade: hsla(0, 0%, 0%, 0.5);
   }
   html.dark_mode {
     --fb-color-off: #70a7ff79;
@@ -39,6 +40,7 @@
     --secondary-icon: hsl(0, 0%, 80%);
     --primary-icon: hsl(0, 0%, 85%);
     --modal-color: #1a1a1ab2;
+    --off-bg-main-off-fade: hsla(0, 0%, 100%, 0.5);
   }
   *::before,
   *::after {
@@ -110,7 +112,11 @@
   }
 
   .shad-css {
-    box-shadow: 0px 0px 10px 0px rgba(0 0 0 / 0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0 0 0 / 0.2);
+  }
+
+  html.dark_mode .shad-css {
+    box-shadow: 0px 0px 10px 0px rgba(0 0 0 / 0.5);
   }
   .modal {
     background-color: var(--modal-color);

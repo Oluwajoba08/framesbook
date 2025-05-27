@@ -10,22 +10,25 @@ export async function createPost(userId: string, text: string, image?: string) {
     },
   })
 }
+//check fn at actions/postActions
 
 export async function getPosts(currentUserId: string) {
   try {
     const data = await prisma.posts.findMany({
-      where: {},
+      where: {
+        id: currentUserId,
+      },
       select: {
         content: true,
         created_at: true,
         author_id: true,
         author: true,
-        // images: true,
-        // likes: true,
-        // comments: true,
-        // shares: true,
-        // group: true,
-        // page: true,
+        images: true,
+        likes: true,
+        comments: true,
+        shares: true,
+        group: true,
+        page: true,
       },
     })
 
@@ -45,13 +48,13 @@ export async function getProfilePosts(id: string) {
         content: true,
         created_at: true,
         author_id: true,
-        // author: true,
-        // images: true,
-        // likes: true,
-        // comments: true,
-        // shares: true,
-        // group: true,
-        // page: true,
+        author: true,
+        images: true,
+        likes: true,
+        comments: true,
+        shares: true,
+        group: true,
+        page: true,
       },
     })
 

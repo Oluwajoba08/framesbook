@@ -432,7 +432,13 @@ const CreatePost = ({ setCreatePostOpen, dispatch, state }: createProps) => {
                   </div>
                 </div>
                 <div className={`${state.addPhotoOpen ? "overflow-y-scroll scroller h-56" : ""} w-full px-4 pr-2`}>
-                  <textarea value={inputValue} onChange={(e) => setInputValue(e.target.value)} placeholder={`What's on your mind, ${"Oluwajoba"}?`} className="w-full bg-transparent text-2xl focus-within:outline-none resize-none h-28" />
+                  <textarea
+                    name="content"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder={`What's on your mind, ${"Oluwajoba"}?`}
+                    className="w-full bg-transparent text-2xl focus-within:outline-none resize-none h-28"
+                  />
                   {state.addPhotoOpen && (
                     <div className="w-full flex flex-col gap-2 p-2 rounded-lg border border-[--off-bg-main-off]">
                       <div className="flex justify-center items-center bg-[--off-bg-main-off] rounded h-36">

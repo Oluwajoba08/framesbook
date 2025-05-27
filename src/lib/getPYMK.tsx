@@ -1,7 +1,7 @@
 import React from "react"
 import type { PMYK } from "./definitions"
 
-const getPYMK = async (): Promise<PMYK[]> => {
+const getPYMK = (): PMYK[] => {
   // Promise.resolve(setTimeout( 3430))
   return [
     {
@@ -39,13 +39,7 @@ const getPYMK = async (): Promise<PMYK[]> => {
       id: "459343058",
       name: "Kelechi Peter",
       image: "falcons1.jpg",
-      mutualFriends: [
-        {
-          _id: "389438535",
-          _name: "Heole Horer",
-          _image: "lagoscity1.jpg",
-        },
-      ],
+      mutualFriends: [],
       link: "jkrtlldfd",
     },
     {

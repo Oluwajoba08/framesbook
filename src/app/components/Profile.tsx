@@ -6,10 +6,12 @@ import Link from "next/link"
 import friends from "@/lib/friends"
 import CreatePost from "./Home/NewPost/CreatePost"
 import NewPost from "./Home/NewPost/NewPost"
+import Posts from "./Home/Posts"
+import UserPosts from "./UserPosts"
 // import Posts
 // import { redirect } from "next/navigation"
 
-const Profile = ({ params }: { params: { id: string } }) => {
+const Profile = ({ id }: { id: string }) => {
   const [activeTab, setActiveTab] = useState<"posts" | "about" | "friends" | "photos" | "videos" | "reels" | "more">("posts")
   const [openPYMK, setOpenPYMK] = useState(false)
   const [createPostOpen, setCreatePostOpen] = useState(false)
@@ -129,6 +131,7 @@ const Profile = ({ params }: { params: { id: string } }) => {
         </div>
         <div className="flex flex-col gap-5 ">
           <NewPost page="profile" firstName="Oluwajoba" />
+          <UserPosts authorId={id} />
         </div>
       </div>
     </main>

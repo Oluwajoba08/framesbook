@@ -3,8 +3,8 @@ import Image from "next/image"
 import Link from "next/link"
 import getNotifications from "@/lib/getNotifications"
 
-const Notifications = async () => {
-  const notifications = await getNotifications()
+const Notifications = () => {
+  const notifications = getNotifications()
 
   return (
     <div className={`bg-[--off-bg-main] border border-[--off-bg-main] shad-css absolute top-[50px] right-3 rounded-md w-96 h-[calc(100vh-80px)] p-2 z-[60] overflow-y-scroll scroller`}>

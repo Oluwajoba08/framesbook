@@ -3,8 +3,8 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
 import ThemeProvider from "./providers/ThemeProvider"
-import { FeelingProvider } from "@/app/providers/FeelingProvider"
 import ConditionalLayout from "./components/ConditionalLayout"
+// import { AuthProvider } from "./providers/AuthProvider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -16,15 +16,13 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <FeelingProvider>
-        <html lang="en">
-          <body className={inter.className}>
-            <Toaster />
-            <ConditionalLayout />
-            {children}
-          </body>
-        </html>
-      </FeelingProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <Toaster />
+          <ConditionalLayout />
+          {children}
+        </body>
+      </html>
     </ThemeProvider>
   )
 }

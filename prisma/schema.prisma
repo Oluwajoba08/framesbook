@@ -12,14 +12,6 @@ datasource db {
 }
 
 // Public Schemas 
-model dummy {
-  id         BigInt   @id @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  name       String?
-
-  @@schema("public")
-}
-
 model user {
   id                       String          @id @default(uuid())
   email                    String          @unique
@@ -49,13 +41,14 @@ model user {
 model posts {
   id         String     @id @default(uuid())
   content    String?
-  images     String?
   created_at DateTime   @default(now()) @db.Timestamptz(6)
   updated_at DateTime?  @updatedAt
   author_id  String
   group_id   String?
   page_id    String?
-  author     user       @relation("author_post", fields: [author_id], references: [id])
+  images     image[]
+  audience   audience   @default(FRIENDS)
+  author     user       @relation("author_post", fields: [author_id], references: [id], onDelete: Cascade)
   group      group?     @relation("group_post", fields: [group_id], references: [id])
   page       pages?     @relation("page_post", fields: [page_id], references: [id])
   likes      like[]     @relation("like_post")
@@ -68,7 +61,7 @@ model posts {
 model comments {
   id         String     @id @default(uuid())
   content    String?
-  images     String?
+  image      String?
   created_at DateTime   @default(now()) @db.Timestamptz(6)
   updated_at DateTime?  @updatedAt
   post_id    String
@@ -113,7 +106,7 @@ model shares {
 model story {
   id         String   @id @default(uuid())
   content    String?
-  images     String?
+  image      String?
   created_at DateTime @default(now()) @db.Timestamptz(6)
   author_id  String
   group_id   String?
@@ -170,6 +163,18 @@ model friendRequest {
   @@schema("public")
 }
 
+model image {
+  id        String   @id @default(uuid())
+  src       String
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  postId    String
+  post      posts    @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@schema("public")
+}
+
 enum like_type {
   like
   love
@@ -187,6 +192,16 @@ enum requestStatus {
   PENDING
   REJECTED
   BLOCKED
+
+  @@schema("public")
+}
+
+enum audience {
+  FRIENDS
+  PUBLIC
+  PRIVATE
+  FRIENDS_EXCEPT
+  SPECIFIC_FRIENDS
 
   @@schema("public")
 }

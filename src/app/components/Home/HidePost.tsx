@@ -1,7 +1,7 @@
 import React from "react"
 import type { postProps } from "@/lib/definitions"
 
-const HidePost = async ({ id, group, author, setHidePost }: { id: string; group: postProps["group"]; author: postProps["author"]; setHidePost: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const HidePost = ({ id, group, author, setHidePost }: { id: string; group: postProps["group"]; author: postProps["author"]; setHidePost: React.Dispatch<React.SetStateAction<boolean>> }) => {
   return (
     <div className="flex flex-col shadow-md p-3 rounded-md bg-[--off-bg-main] w-[450px] lg:w-[500px]">
       <div className="flex justify-between items-center hover:bg-[--off-bg-main-off] px-2 rounded py-1.5 cursor-pointer">
@@ -11,7 +11,7 @@ const HidePost = async ({ id, group, author, setHidePost }: { id: string; group:
             <p className="text-xs text-[--off-text-main]">Hiding posts help Framesbook personalize your Feed.</p>
           </div>
         </div>
-        <button onClick={() => setHidePost(false)} className="px-3 py-1.5 self-center bg-[--off-bg-main-off] rounded font-semibold">
+        <button onClick={() => setHidePost(false)} className="px-3 py-1.5 self-center bg-[--off-bg-main-off-hover] rounded font-semibold">
           Undo
         </button>
       </div>

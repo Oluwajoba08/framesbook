@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react"
+import Loading from "./components/Loading"
 
-const Loading = () => {
+const Page = () => {
   return (
-    <div>Loading</div>
+    <div className="h-screen flex justify-center items-center">
+      <Loading />
+    </div>
   )
 }
 
-export default Loading
+export default Page

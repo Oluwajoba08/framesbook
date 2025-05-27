@@ -1,20 +1,27 @@
 import React from "react"
 import Profile from "../components/Profile"
-import { prisma } from "../db"
-import { redirect } from "next/navigation"
+import { AlertCircle } from "lucide-react"
 import { createClient } from "@/utils/supabase/server"
-// import { getProfile } from "@/lib/data"
+import { prisma } from "../db"
+import { notFound } from "next/navigation"
+// import { redirect } from "next/navigation"
 
-const ProfilePage = async ({ params }: { params: { id: string } }) => {
+const ProfilePage = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params
   const supabase = await createClient()
 
-  // const posts = await getProfile(params.id)
-  // const { data, error } = await supabase.auth.getUser()
-  // if (error || !data?.user) {
-  //   redirect("/login")
-  // }
+  const profiledUser = true
+  // const profiledUser = await prisma.user.findUnique({
+  //   where: {
+  //     id: params.id,
+  //   },
+  // })
 
-  return <Profile params={params} />
+  if (!profiledUser) {
+    notFound()
+  }
+
+  return <Profile id={params.id} />
 }
 
 export default ProfilePage

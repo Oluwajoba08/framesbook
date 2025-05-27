@@ -27,9 +27,27 @@ export type User = {
   coverImage: string
   profileLink: string
   friends: User[]
+  email: string
+  date_of_birth: Date
+  bio: string
+  createdAt: Date
+  updatedAt?: Date
+  // authored_posts?: postProps[]
+  likes: like[]
+  sent_friend_requests: FriendRequests[]
+  received_friend_requests: FriendRequests[]
+  // sent_friends: friendship[]
+  // received_friends: friendship[]
+  pages?: Page[]
+  // comments: CommentProps[]
+  shares?: Share[]
+  pageFollows?: Page[]
+  groupsIn?: Group[]
+  story?: StoryProps[]
 }
 
 export type Group = {
+  id: string
   name: string
   profileLink: string
   profileImage: string
@@ -38,6 +56,7 @@ export type Group = {
 }
 
 export type Page = {
+  id: string
   name: string
   profileLink: string
   profileImage: string
@@ -50,27 +69,31 @@ export type like = {
   liker_id: String
   post_id?: String
   comment_id?: String
-  like_role: "like" | "love" | "haha" | "care" | "sad" | "wow"
+  like_role?: "LIKE" | "LOVE" | "HAHA" | "CARE" | "SAD" | "WOW" | "ANGRY"
   liker: User
   post?: postProps
-  author: User
-  comment?: Comment
+  comment?: CommentProps
 }
 
-export type Comment = {
+export type CommentProps = {
   id: string
   author: User
   authorId: String
+  postId: string
+  postAuthorId: string
+  createdAt: Date
   content?: string
   likes: like[]
-  images?: string[]
-  parent?: Comment
-  postId: string
-  createdAt: Date
-  updatedAt: Date
+  images?: Image[]
+  parent?: CommentProps
+  parentId?: string
+  updatedAt?: Date
+  replies?: CommentProps[]
 }
 
 export type Share = {
+  id: string
+  postId: string
   author: User
   createdAt: Date
 }
@@ -78,6 +101,9 @@ export type Share = {
 export type Image = {
   id: string
   src: string
+  text?: string
+  createdAt?: Date
+  postId?: string
 }
 
 export type postProps = {
@@ -87,13 +113,33 @@ export type postProps = {
   updatedAt?: Date
   authorId: string
   author: User
-  audience: "public" | "friends" | "friends of friends"
+  audience: Audience
   likes: like[]
-  comments: Comment[]
+  comments: CommentProps[]
   shares: Share[]
   images?: Image[]
   group?: Group
   page?: Page
+}
+
+export type StoryProps = {
+  id: string
+  createdAt: Date
+  authorId: string
+  author: User
+  likes: like[]
+  images: Image[]
+  live: boolean
+  group?: Group
+  page?: Page
+}
+
+export enum Audience {
+  "FRIENDS",
+  "PUBLIC",
+  "PRIVATE",
+  "SPECIFIC_FRIENDS",
+  "FRIENDS_EXCEPT",
 }
 
 export type feelingsType = {

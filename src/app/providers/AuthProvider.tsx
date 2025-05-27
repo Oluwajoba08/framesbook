@@ -1,22 +1,26 @@
 "use client"
 import React, { createContext } from "react"
-import { redirect } from "next/navigation"
-import { createClient } from "@/utils/supabase/server"
+// import { createClient } from "@/utils/supabase/client"
+// import { prisma } from "../db" // can't use async in client component
 
 type ContextType = {}
 
-{
-  /* <i aria-hidden="true" background-position: 0px -377px; background-size: auto; width: 20px; height: 20px; background-repeat: no-repeat; display: inline-block;"></i> */
-}
 export const AuthContext = createContext({})
 
-export const AuthProvider = async ({ children }: { children: React.ReactNode }) => {
-  const supabase = await createClient()
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  // const supabase = createClient()
 
-  const { data, error } = await supabase.auth.getUser()
-  // if (error || !data?.user) {
-  //   redirect("/login")
-  // }
+  // const {
+  //   data: { user },
+  //   error,
+  // } = await supabase.auth.getUser()
 
-  return <AuthContext.Provider value={{ data, error }}>{children}</AuthContext.Provider>
+  // const userProfile = await prisma.user.findUnique({
+  //   where: {
+  //     id: user?.id,
+  //   },
+  // })
+
+  // return <AuthContext.Provider value={{ user, userProfile }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>
 }
