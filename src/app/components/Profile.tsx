@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { Suspense, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import friends from "@/lib/friends"
@@ -8,10 +8,12 @@ import CreatePost from "./Home/NewPost/CreatePost"
 import NewPost from "./Home/NewPost/NewPost"
 import Posts from "./Home/Posts"
 import UserPosts from "./UserPosts"
+import PostSkeleton from "./skeleton/PostSkeleton"
+import { postProps, User } from "@/lib/definitions"
 // import Posts
 // import { redirect } from "next/navigation"
 
-const Profile = ({ id }: { id: string }) => {
+const Profile = ({ user, posts }: { user: User; posts: postProps[] }) => {
   const [activeTab, setActiveTab] = useState<"posts" | "about" | "friends" | "photos" | "videos" | "reels" | "more">("posts")
   const [openPYMK, setOpenPYMK] = useState(false)
   const [createPostOpen, setCreatePostOpen] = useState(false)
@@ -130,8 +132,11 @@ const Profile = ({ id }: { id: string }) => {
           </div>
         </div>
         <div className="flex flex-col gap-5 ">
-          <NewPost page="profile" firstName="Oluwajoba" />
-          <UserPosts authorId={id} />
+          <NewPost page="profile" firstName={user.name} />
+          <Suspense fallback={<PostSkeleton />}>
+            <Posts posts={posts} authorId={user.id} />
+          </Suspense>
+          {/* <UserPosts authorId={id} /> */}
         </div>
       </div>
     </main>

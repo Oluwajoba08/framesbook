@@ -8,7 +8,7 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas   = ["auth", "public", "storage"]
+  schemas   = ["public"]
 }
 
 // Public Schemas 
@@ -20,6 +20,7 @@ model user {
   bio                      String?         @default("")
   profile_image            String?         @default("avatar.jpg")
   cover_image              String?         @default("avatar.jpg")
+  profile_link             String          @unique //new(every user must have one)
   created_at               DateTime        @default(now()) @db.Timestamptz(6)
   updated_at               DateTime?       @updatedAt
   authored_posts           posts[]         @relation("author_post")
