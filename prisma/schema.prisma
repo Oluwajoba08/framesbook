@@ -17,7 +17,6 @@ model user {
   email                    String          @unique
   name                     String
   date_of_birth            DateTime
-  bio                      String?         @default("")
   profile_image            String?         @default("avatar.jpg")
   cover_image              String?         @default("avatar.jpg")
   profile_link             String          @unique //new(every user must have one)
@@ -35,6 +34,36 @@ model user {
   page_follows             pages[]         @relation("user_follow_pages")
   groups_in                group[]         @relation("user_in_group")
   story                    story[]         @relation("user_story")
+  about                    about?
+  preferences              preferences?
+
+  @@schema("public")
+}
+
+model about {
+  id                  String              @id @default(uuid())
+  bio                 String?             @default("")
+  workplace           String?
+  education           String[]
+  current_city        String?
+  hometown            String?
+  relationship_status RELATIONSHIP_STATUS
+  user                user                @relation(fields: [userId], references: [id])
+  userId              String              @unique
+
+  @@schema("public")
+}
+
+model preferences {
+  post_audience         audience @default(FRIENDS)
+  story_audience        audience @default(FRIENDS)
+  workplace_audience    audience @default(PUBLIC)
+  relationship_audience audience @default(PUBLIC)
+  current_city_audience audience @default(PUBLIC)
+  hometown_audience     audience @default(PUBLIC)
+  joined_audience       audience @default(PRIVATE)
+  user                  user     @relation(fields: [userId], references: [id])
+  userId                String   @unique
 
   @@schema("public")
 }
@@ -203,6 +232,17 @@ enum audience {
   PRIVATE
   FRIENDS_EXCEPT
   SPECIFIC_FRIENDS
+
+  @@schema("public")
+}
+
+enum RELATIONSHIP_STATUS {
+  SINGLE
+  MARRIED
+  DIVORCED
+  IN_A_RELATIONSHIP
+  ENGAGED
+  COMPLICATED
 
   @@schema("public")
 }

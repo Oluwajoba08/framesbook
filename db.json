@@ -370,7 +370,7 @@
       "audience": "PUBLIC",
       "likes": [],
       "shares": [],
-      "authorId": "1",
+      "authorId": "3",
       "author": {
         "id": "3",
         "name": "Emma Hayes",
@@ -409,7 +409,7 @@
       ],
       "comments": [
         {
-          "authorId": "2",
+          "authorId": "3",
           "author": {
             "id": "3",
             "name": "Emma Hayes",

@@ -7,18 +7,18 @@ import friends from "@/lib/friends"
 import CreatePost from "./Home/NewPost/CreatePost"
 import NewPost from "./Home/NewPost/NewPost"
 import Posts from "./Home/Posts"
-import UserPosts from "./UserPosts"
+// import UserPosts from "./UserPosts"
 import PostSkeleton from "./skeleton/PostSkeleton"
 import { postProps, User } from "@/lib/definitions"
 // import Posts
 // import { redirect } from "next/navigation"
 
-const Profile = ({ user, posts }: { user: User; posts: postProps[] }) => {
+const Profile = ({ user, posts }: { user: User | undefined; posts: postProps[]; currentUserId: string | undefined }) => {
   const [activeTab, setActiveTab] = useState<"posts" | "about" | "friends" | "photos" | "videos" | "reels" | "more">("posts")
   const [openPYMK, setOpenPYMK] = useState(false)
   const [createPostOpen, setCreatePostOpen] = useState(false)
-  const [loginModalOpen, setLoginModalOpen] = useState(true)
-  const [loginText, setLoginText] = useState<"">("")
+  const [loginModalOpen, setLoginModalOpen] = useState<"photos" | "posts" | "videos" | "default" | null>(null)
+  const [loginFrom, setLoginFrom] = useState<"">("")
   const loginRef = useRef(null)
   // const [loginText, setLoginText] = useState<"">("See more on Facebook")
 
@@ -27,7 +27,7 @@ const Profile = ({ user, posts }: { user: User; posts: postProps[] }) => {
       <section className="flex flex-col w-full items-center" style={{ backgroundImage: "linear-gradient(to bottom, var(--off-text-main), var(--off-bg-main) 60%)" }}>
         <div className="flex flex-col lg:w-[960px] items-center">
           {/* This is visible only if currentUser = profiledUser . */}
-          <div className="rounded-b-xl w-full max-w-5xl flex px-8 py-4 items-end justify-end h-[58vh] bg-no-repeat bg-center bg-cover" style={{ backgroundImage: `url(/${user.coverImage})` }}>
+          <div className="rounded-b-xl w-full max-w-5xl flex px-8 py-4 items-end justify-end h-[58vh] bg-no-repeat bg-center bg-cover" style={{ backgroundImage: `url(/${user?.coverImage})` }}>
             <button className="bg-[--off-bg-main] flex gap-1 px-3 py-2 rounded-md">
               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" className="fill-[--text-main]">
                 <path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z" />
@@ -38,7 +38,7 @@ const Profile = ({ user, posts }: { user: User; posts: postProps[] }) => {
           <div className="flex flex-col md:w-[840px]">
             <div className="flex relative justify-between w-full py-4 pl-44">
               <div className="absolute rounded-full left-0 -top-8 w-40 h-40 overflow-hidden border-[4px] border-[--off-bg-main]">
-                <Image src={`/${user.profileImage}`} alt="profile" width={200} height={200} className="object-cover w-40 h-40" />
+                <Image src={`/${user?.profileImage}`} alt="profile" width={200} height={200} className="object-cover w-40 h-40" />
               </div>
               {/* This is visible only if currentUser = profiledUser */}
               <div className="absolute bottom-3 cursor-pointer left-28 bg-[--off-bg-main-off] rounded-full p-2 flex justify-center items-center w-10 h-10">
@@ -47,7 +47,7 @@ const Profile = ({ user, posts }: { user: User; posts: postProps[] }) => {
                 </svg>
               </div>
               <div className="flex flex-col gap-1 items-start w-full">
-                <p className="text-3xl font-bold">{user.name}</p>
+                <p className="text-3xl font-bold">{user?.name}</p>
                 <p>825 friends</p>
                 <div className="flex justify-between w-full">
                   <div className="flex ml-2 items-center">
@@ -130,28 +130,43 @@ const Profile = ({ user, posts }: { user: User; posts: postProps[] }) => {
           </div>
         </div>
       </section>
-      <div className="flex flex-col md:flex-row w-full max-w-[840px] min-h-screen justify-between pt-4 px-3 md:px-0">
-        <div className="flex flex-col gap-5">
+      <div className="flex flex-col md:gap-4 md:flex-row w-full max-w-[840px] min-h-screen justify-between pt-4 px-3 md:px-0">
+        <div className="flex flex-col gap-5 w-full">
           <div className="bg-[--off-bg-main] p-3 rounded-md">
             <p className="font-bold text-lg">Intro</p>
           </div>
           <div className="bg-[--off-bg-main] p-3 rounded-md">
-            <div className="flex justify-between">
+            <div className="flex justify-between my-2">
               <p className="font-bold text-lg">Photos</p>
               <Link href={"/login"} className="text-[--app-colors-blue]">
                 See more photos
               </Link>
             </div>
-            <div className="grid grid grid-template-cols-3 "></div>
+            <ul className="grid gap-1 grid-cols-3 grid-rows-3 ">
+              {posts
+                .flatMap((post) => post.images)
+                .slice(0, 9)
+                .map((image) => {
+                  return (
+                    <li className="w-full aspect-square" key={image.id}>
+                      <Link className="w-full aspect-square block rounded-sm overflow-hidden" href={`/photo/${image.id}`}>
+                        <Image className="w-full aspect-square object-cover" src={`/${image.src}`} width={128} height={128} alt="image" />
+                      </Link>
+                    </li>
+                  )
+                })}
+            </ul>
           </div>
           <div className="bg-[--off-bg-main] p-3 rounded-md">
             <p className="font-bold text-lg">Friends</p>
           </div>
         </div>
         <div className="flex flex-col gap-5 ">
-          <NewPost page="profile" firstName={user.name.split(" ")[0]} />
+          {/* This is visible only if currentUser = profiledUser */}
+          <NewPost page="profile" firstName={user?.name.split(" ")[0]} />
+          {/* This is visible only user is logged in */}
           <Suspense fallback={<PostSkeleton />}>
-            <Posts posts={posts} authorId={user.id} />
+            <Posts posts={posts} authorId={user?.id} />
           </Suspense>
           {/* <UserPosts authorId={id} /> */}
         </div>
@@ -160,9 +175,9 @@ const Profile = ({ user, posts }: { user: User; posts: postProps[] }) => {
         <>
           <div
             ref={loginRef}
-            className={`fixed inset-0 z-[59]`}
+            className={`fixed inset-0 z-[59] bg-[--modal-color]`}
             onClick={(e) => {
-              setLoginModalOpen(false)
+              setLoginModalOpen(null)
             }}
           ></div>
           <div className={`absolute shad-css z-[60] py-3 flex flex-col top-8 rounded-md overflow-hidden right-4 w-[340px] bg-[--off-bg-main]`}></div>

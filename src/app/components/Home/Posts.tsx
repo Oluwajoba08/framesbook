@@ -4,7 +4,7 @@ import React from "react"
 import Post from "./Post"
 import { postProps } from "@/lib/definitions"
 
-const Posts = ({ posts, authorId }: { posts: postProps[]; authorId: string | null }) => {
+const Posts = ({ posts, authorId }: { posts: postProps[]; authorId: string | undefined }) => {
   if (authorId) {
     if (!posts) {
       return (

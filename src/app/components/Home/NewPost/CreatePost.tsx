@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useContext, Suspense } from "react"
 import Image from "next/image"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import Loading from "../../Loading"
 import Feelings, { FeelingContext } from "./Feelings"
 import Activities from "./Activities"
@@ -19,7 +19,6 @@ type audienceTypes = "Friends" | "Public" | "Only me" | "Friends except" | "Spec
 const CreatePost = ({ setCreatePostOpen, dispatch, state }: createProps) => {
   const feel = useContext(FeelingContext)
   const modalRef = useRef(null)
-  const [photo, setPhoto] = useState(null)
   const [defaultAudience, setDefaultAudience] = useState<audienceTypes>("Friends")
   const [postAudience, setPostAudience] = useState<audienceTypes>(defaultAudience)
   const [inputValue, setInputValue] = useState("")
@@ -27,7 +26,27 @@ const CreatePost = ({ setCreatePostOpen, dispatch, state }: createProps) => {
   const [feelingsOrActivitiesTab, setFeelingsOrActivitiesTab] = useState<"feelings" | "activities">("feelings")
   const [feelingSearch, setFeelingSearch] = useState("")
   const [feelingModalOpen, setFeelingModalOpen] = useState(false)
+  const [selectedImages, setSelectedImages] = useState([])
+  const [dragActive, setDragActive] = useState(false)
   // const [first, setFirst] = useState("")
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files)
+      processFiles(files)
+    } else {
+      console.log("No file chosen")
+    }
+  }
+
+  const processFiles = (files: File[]) => {
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"))
+
+    imageFiles.forEach((file) => {
+      if (file.size) {
+      }
+    })
+  }
 
   const handleAudChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.value) {
@@ -441,7 +460,7 @@ const CreatePost = ({ setCreatePostOpen, dispatch, state }: createProps) => {
                   />
                   {state.addPhotoOpen && (
                     <div className="w-full flex flex-col gap-2 p-2 rounded-lg border border-[--off-bg-main-off]">
-                      <div className="flex justify-center items-center bg-[--off-bg-main-off] rounded h-36">
+                      <div onClick={() => "TODO"} className="flex justify-center items-center bg-[--off-bg-main-off] rounded h-36">
                         <div className="flex flex-col items-center">
                           <div className="w-9 h-9 p-1.5 rounded-full bg-[--off-bg-main-off-hover] flex justify-center items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
@@ -451,6 +470,7 @@ const CreatePost = ({ setCreatePostOpen, dispatch, state }: createProps) => {
                           <p className="text-lg font-semibold">Add Photos/Videos</p>
                           <p className="text-xs">or drag and drop</p>
                         </div>
+                        <input type="file" multiple accept="image/*" onChange={handleFileSelect} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                       </div>
                       <div className="flex justify-around items-center bg-[--off-bg-main-off] rounded h-16">
                         <div className="bg-[--off-bg-main-off-hover] rounded-full p-1.5 w-9 h-9 flex justify-center items-center">
@@ -459,7 +479,7 @@ const CreatePost = ({ setCreatePostOpen, dispatch, state }: createProps) => {
                           </svg>
                         </div>
                         <p className="text-sm">Add photos and videos from your mobile device.</p>
-                        <button className="bg-[--off-bg-main-off-hover] font-semibold rounded-md px-2.5 py-1">Add</button>
+                        <input type="file" title="Add" className="bg-[--off-bg-main-off-hover] font-semibold rounded-md px-2.5 py-1" />
                       </div>
                     </div>
                   )}
@@ -511,7 +531,7 @@ const CreatePost = ({ setCreatePostOpen, dispatch, state }: createProps) => {
                       </div>
                     </div>
                   </div>
-                  <button disabled={!inputValue || !photo} className="mt-2 px-4 w-full py-2 bg-[--fb-color] disabled:bg-[--off-bg-main-off-hover] disabled:text-[--off-text-main-off] rounded-md font-bold">
+                  <button disabled={!inputValue || !selectedImages} className="mt-2 px-4 w-full py-2 bg-[--fb-color] disabled:bg-[--off-bg-main-off-hover] disabled:text-[--off-text-main-off] rounded-md font-bold">
                     Post
                   </button>
                 </div>

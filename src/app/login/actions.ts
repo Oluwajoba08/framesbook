@@ -78,7 +78,7 @@ export async function signup(prevState: any, formData: FormData): Promise<ApiRes
     })
 
     const userData = dataSchema.safeParse(rawData)
-    console.log(userData)
+    // console.log(userData)
     if (!userData.success) {
       return {
         success: false,
@@ -103,9 +103,10 @@ export async function signup(prevState: any, formData: FormData): Promise<ApiRes
       const user = await prisma.user.create({
         data: {
           id: data.user.id,
-          name: `${userData.data.firstname + " " + userData.data.firstname}`,
+          name: `${userData.data.firstname + " " + userData.data.lastname}`,
           email: data.user.email || "unidentified",
           date_of_birth: "",
+          profile_link: `${userData.data.firstname + "." + userData.data.lastname}` || `${userData.data.firstname + "." + userData.data.lastname + (Math.floor(Math.random() * 100) + 1)}`,
         },
       })
     }
@@ -135,3 +136,48 @@ export async function logout() {
     console.error("Failed to logout: ", err)
   }
 }
+
+// work to do
+// export async function loginRedirect(prevState: any, formData: FormData): Promise<ApiResponse> {
+//   try {
+//     const supabase = await createClient()
+
+//     const rawData = {
+//       email: formData.get("email") as string,
+//       password: formData.get("password") as string,
+//     }
+
+//     const dataSchema = z.object({
+//       email: z.string().email("Invalid email format").trim(),
+//       password: z.string().min(6, "Password must be at least 6 characters"),
+//     })
+
+//     const userData = dataSchema.safeParse(rawData)
+//     if (!userData.success) {
+//       return {
+//         success: false,
+//         message: `Validation failed: ${userData.error.errors[0].message}`,
+//       }
+//     }
+
+//     // if (error) {
+//     // return {
+//     //   success: false,
+//     //   message: "An unexpected error occured. Please try again later.",
+//     // }
+//     // }
+
+//     console.log("Log in successful")
+//     // return {
+//     //   success: true,
+//     //   message: "Logged in successfully",
+//     //   data: data.user,
+//     // }
+//   } catch (err) {
+//     console.error("Unexpected error: ", err)
+//     // return {
+//     //   success: false,
+//     //   message: "An unexpected error occured. Please try again later.",
+//     // }
+//   }
+// }

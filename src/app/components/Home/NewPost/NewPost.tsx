@@ -21,7 +21,7 @@ export type stateTypes = {
 
 type pageProps = "normal" | "profile"
 
-const NewPost = ({ firstName, page }: { firstName: string; page: pageProps }) => {
+const NewPost = ({ firstName, page }: { firstName: string | undefined; page: pageProps }) => {
   const [createPostOpen, setCreatePostOpen] = useState(false)
 
   const initialState = {

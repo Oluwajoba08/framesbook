@@ -6,6 +6,25 @@ export type PMYK = {
   link: string
 }
 
+export type About = {
+  bio: string
+  workplace?: string
+  relationship: RelationshipStatus
+  education: string[]
+  currentCity?: string
+  hometown?: string
+}
+
+export type Preferences = {
+  postAudience: Audience
+  storyAudience: Audience
+  workplaceAudience: Audience
+  relationshipAudience: Audience
+  currentCityAudience: Audience
+  hometownAudience: Audience
+  joinedAudience: Audience
+}
+
 export type FriendRequests = {
   id: string
   name: string
@@ -29,7 +48,6 @@ export type User = {
   friends: User[]
   email: string
   date_of_birth: Date
-  bio: string
   createdAt: Date
   updatedAt?: Date
   // authored_posts?: postProps[]
@@ -44,6 +62,8 @@ export type User = {
   pageFollows?: Page[]
   groupsIn?: Group[]
   story?: StoryProps[]
+  about: About
+  preferences: Preferences
 }
 
 export type Group = {
@@ -117,7 +137,7 @@ export type postProps = {
   likes: like[]
   comments: CommentProps[]
   shares: Share[]
-  images?: Image[]
+  images: Image[]
   group?: Group
   page?: Page
 }
@@ -140,6 +160,15 @@ export enum Audience {
   "PRIVATE",
   "SPECIFIC_FRIENDS",
   "FRIENDS_EXCEPT",
+}
+
+enum RelationshipStatus {
+  "SINGLE",
+  "MARRIED",
+  "DIVORCED",
+  "IN A RELATIONSHIP",
+  "ENGAGED",
+  "IT'S COMPLICATED",
 }
 
 export type feelingsType = {
